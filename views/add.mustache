@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}}
+    <!-- Add any necessary CSS or fonts links for styling -->
+</head>
+<body>
+    <div class="main">
+        <div class="space"></div>
+        <h1>Create an Alumni Event</h1>
+        <form method="post" role="form">
+            <div class="form-group">
+                <input type="text" id="event" name="event" placeholder="Event Name" required>
+            </div>
+            <div class="form-group">
+                <select id="category" name="category" required>
+                    <option value="professional">Professional Development</option>
+                    <option value="networking">Networking</option>
+                    <option value="campus">Campus Event</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="description" rows="4" cols="50" name="description" placeholder="Enter a detailed description of the event" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Event Image</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+            <div class="form-group">
+                <input type="text" id="location" name="location" placeholder="Event Location" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="organizer" name="organizer" placeholder="Event Organizer" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="contact" name "contact" placeholder="Contact Information" required>
+            </div>
+            <div class="form-group">
+                <label for="registration">Registration Link</label>
+                <input type="url" id="registration" name="registration" placeholder="Event Registration Link">
+            </div>
+            <div class="form-group">
+                <label for="participants">Maximum Participants</label>
+                <input type="number" id="participants" name="participants" placeholder="Enter the maximum number of participants" required>
+            </div>
+            <div class="form-group" id="ckedit">
+                <label>Event Details</label>
+                <textarea style="font-family: 'Roboto', sans-serif" id="details" rows="8" cols="50" name="details" placeholder="Provide detailed information about the event"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create Event">
+            </div>
+        </form>
+        <p id="successMessage" style="display: none; color: green;">Event created successfully!</p>
+        <a href="/dashboard">Go back to Dashboard</a>
+    </div>
+    <script>
+        var myVar;
+
+        function loading() {
+            myVar = setTimeout(showPage, 1500);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style display = "none";
+            document.getElementById("fetch").style display = "none";
+            document.getElementById("content").style display = "block";
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.14.1/ckeditor.js" integrity="sha256-bEIQpI72w9NJuIVhTLFUF2/8uxl0u5800r8ddViuv+o=" crossorigin="anonymous"></script>
+    <script>
+        // You can add JavaScript code here for additional functionality.
+    </script>
+</body>
+</html>

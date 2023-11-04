@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}} <!-- Include your header template here -->
+    <!-- Include CSS libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../edit.css"> <!-- Add your custom CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.css"> <!-- Include Dark Mode CSS -->
+</head>
+<body onload="loading()">
+    <div id="loader"></div> <!-- Loading spinner element -->
+    <br>
+    <h1 id="fetch"></h1> <!-- Placeholder for content loading message -->
+    <div style="display:none;" id="content" class="animate-bottom">
+        <!-- Main content container -->
+        <div class="icon-scroll" id="small-menu">
+            <div class="icon-bar" id="myIcons">
+                <!-- Navigation icons -->
+                <a class="active" href="#"><i class="fa fa-home" style="color: #31708f;"></i></a>
+                <a href="/add"><i class="fa fa-plus" style="color: #31708f;"></i><span>Add</span></a>
+                <a href="/completed"><i class="fa fa-smile-o" style="color: #31708f;"></i><span>Completed</span></a>
+                <a href="/logout"><i class="fa fa-backward" style="color: #31708f;"></i><span>Logout</span></a>
+            </div>
+        </div>
+        <div class="main" id="myMain">
+            <div class="pic"></div> <!-- Image or avatar -->
+            <div class="details">
+                <h1>Edit Goal</h1>
+                {{#goal}}
+                <!-- Edit goal form -->
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <input type="text" id="title" name="title" value="{{goal}}" placeholder="Goal Title" required>
+                    </div>
+                    <div class="form-group">
+                        <input style="margin-left:10px" type="date" id="started" name="started" value="{{started}}" required>
+                    </div>
+                    <div class="form-group" id="ckedit">
+                        <p>
+                            <label>Change Description</label>
+                            <textarea style="font-family: 'Roboto', sans-serif" id="description" rows="4" cols="50" name="description" placeholder="{{description}}" required></textarea>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update">
+                    </div>
+                </form>
+                {{/goal}}
+            </div>
+        </div>
+    </div>
+    <script>
+        var myVar;
+        function loading() {
+            myVar = setTimeout(showPage, 1500); // Show content after 1.5 seconds (adjust as needed)
+        }
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("fetch").style.display = "none";
+            document.getElementById("content").style.display = "block"; // Display the content
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.14.1/ckeditor.js"></script> <!-- Include CKEditor -->
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script> <!-- Include Dark Mode JavaScript -->
+</body>
+</html>

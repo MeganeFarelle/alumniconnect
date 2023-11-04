@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}}
+
+    <!-- Add any necessary CSS or fonts links for styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../dashboard.css">
+</head>
+<body onload="loading()">
+    <div id="loader"></div>
+    <br>
+    <h1 id="fetch"></h1>
+    <div style="display:none;" id="content" class="animate-bottom">
+        <div class="icon-scroll" id="small-menu" >
+            <div class="icon-bar" id="myIcons">
+                <a class="active" href="/dashboard"><i class="fa fa-home" style="color: #fff;"></i></a>
+                <a href="/events/add"><i class="fa fa-plus" style="color: #fff;"></i><span>Create Event</span></a>
+                <a href="/completed"><i class="fa fa-smile-o" style="color: #fff;"></i><span>Completed Events</span></a>
+                <a href="/logout"><i class="fa fa-backward" style="color: #fff;"></i><span>Logout</span></a>
+            </div>
+        </div>
+        <div class="main" id="myMain">
+           <h1>Welcome, {{user}} </h1>
+            <h3 style="margin-left:550px">Here are your upcoming alumni events</h3>
+            <div class="card-cont">
+                {{#events}}
+                    <div class="card" onclick="openEventModal('{{_id}}')">
+                        <a href="/events/{{_id}}"><h1 class="tit">{{eventName}}</h1></a>
+                        <h2><strong>Category:</strong> {{category}}</h2>
+                        <h2><strong>Date:</strong> {{date}} </h2>
+                        <h2><strong>Description:</strong> {{description}}</h2>
+                        <h2><strong>Location:</strong> {{location}}</h2>
+                        <h2><strong>Organizer:</strong> {{organizer}}</h2>
+                        <h2><strong>Contact:</strong> {{contact}}</h2>
+                        <h2><strong>Max Participants:</strong> {{maxParticipants}}</h2>
+                    </div>
+                {{/events}}
+            </div>
+            {{^events}}
+                <h3 class="try">You haven't created any events yet.</h3>
+            {{/events}}
+        </div>
+        <form id="searchForm" method="post" action="/search" role="form">
+            <input type="text" style="font-family: 'Roboto', sans-serif" placeholder="Search for events" id="search" name="search">
+            <button type="submit" class="sea"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+
+    <!-- Modal for displaying event details -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEventModal()">&times;</span>
+            <h1 id="modalEventName"></h1>
+            <p id="modalCategory"></p>
+            <p id="modalDate"></p>
+            <p id="modalDescription"></p>
+            <p id="modalLocation"></p>
+            <p id="modalOrganizer"></p>
+            <p id="modalContact"></p>
+            <p id="modalMaxParticipants"></p>
+            <!-- Add more event details here as needed -->
+        </div>
+    </div>
+
+    <script>
+        var myVar;
+
+        function loading() {
+            myVar = setTimeout(showPage, 1500);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style display = "none";
+            document.getElementById("fetch").style display = "none";
+            document.getElementById("content").style display = "block";
+        }
+
+        function openEventModal(eventId) {
+            const modal = document.getElementById("eventModal");
+            modal.style display = "block";
+            // Fetch event details using AJAX and populate the modal
+            // Example: You can use Fetch API or jQuery AJAX for this
+            // Replace 'fetchEventDetails' with your actual function to fetch event details
+            fetchEventDetails(eventId)
+                .then(eventDetails => {
+                    // Populate the modal with event details
+                    document.getElementById("modalEventName").textContent = eventDetails.eventName;
+                    document.getElementById("modalCategory").textContent = "Category: " + eventDetails.category;
+                    document.getElementById("modalDate").textContent = "Date: " + eventDetails.date;
+                    document.getElementById("modalDescription").textContent = "Description: " + eventDetails.description;
+                    document.getElementById("modalLocation").textContent = "Location: " + eventDetails.location;
+                    document.getElementById("modalOrganizer").textContent = "Organizer: " + eventDetails.organizer;
+                    document.getElementById("modalContact").textContent = "Contact: " + eventDetails.contact;
+                    document.getElementById("modalMaxParticipants").textContent = "Max Participants: " + eventDetails.maxParticipants;
+                    // Add more event details as needed
+                })
+                .catch(error => {
+                    console.error("Failed to fetch event details: " + error);
+                });
+        }
+
+        function closeEventModal() {
+            const modal = document.getElementById("eventModal");
+            modal.style.display = "none";
+        }
+
+        // Example of handling form submission
+        const searchForm = document.getElementById("searchForm");
+        searchForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            // Implement the search functionality here
+            alert("Searching for: " + e.target.search.value);
+        }
+        
+        // Function to fetch event details - Replace with actual implementation
+        function fetchEventDetails(eventId) {
+            // Example: Fetch event details from the server
+            return fetch(`/events/details/${eventId}`)
+                .then(response => response.json())
+                .then(data => data)
+                .catch(error => {
+                    console.error("Failed to fetch event details: " + error);
+                    throw error;
+                });
+        }
+    </script>
+</body>
+</html>
